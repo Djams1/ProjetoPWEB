@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitaClínica — Cuidado que Transforma Vidas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage:       #4a7c59;
+      --sage-light: #7db591;
+      --sage-pale:  #c8dfc7;
+      --cream:      #f7f3ee;
+      --warm-white: #fdfaf6;
+      --charcoal:   #1e2a1f;
+      --brown:      #6b4c3b;
+      --gold:       #c9a84c;
+      --muted:      #7a8c7b;
+      --border:     #dde8db;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5vw;
+      background: rgba(253,250,246,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--sage);
+      letter-spacing: -.5px;
+    }
+    .logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      font-size: .9rem; font-weight: 500;
+      color: var(--charcoal); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta {
+      background: var(--sage); color: #fff;
+      padding: .55rem 1.4rem; border-radius: 50px;
+      font-size: .88rem; font-weight: 600; text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--sage-light); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 5vw 4rem;
+      gap: 4rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 30%, rgba(74,124,89,.1) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(201,168,76,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--sage-pale); color: var(--sage);
+      padding: .35rem .9rem; border-radius: 50px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .5px;
+      text-transform: uppercase; margin-bottom: 1.4rem;
+    }
+    .hero-badge::before { content: '✦'; font-size: .7rem; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1.12; color: var(--charcoal);
+      margin-bottom: 1.4rem;
+    }
+    h1 em { font-style: italic; color: var(--sage); }
+    .hero-desc {
+      font-size: 1.05rem; line-height: 1.75;
+      color: var(--muted); max-width: 480px;
+      margin-bottom: 2.2rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--sage); color: #fff;
+      padding: .85rem 2rem; border-radius: 50px;
+      font-weight: 600; font-size: .95rem; text-decoration: none;
+      transition: background .2s, box-shadow .2s, transform .15s;
+      box-shadow: 0 4px 18px rgba(74,124,89,.3);
+    }
+    .btn-primary:hover { background: var(--charcoal); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(74,124,89,.4); }
+    .btn-ghost {
+      color: var(--charcoal); font-weight: 500; font-size: .95rem;
+      text-decoration: none; display: flex; align-items: center; gap: .4rem;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--sage); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--sage);
+    }
+    .stat-label { font-size: .8rem; color: var(--muted); margin-top: .15rem; }
+
+    /* Hero image collage */
+    .hero-visual {
+      position: relative; height: 560px;
+    }
+    .hero-img-main {
+      position: absolute; right: 0; top: 0;
+      width: 75%; height: 85%;
+      border-radius: 24px 24px 80px 24px;
+      object-fit: cover;
+      box-shadow: 0 24px 60px rgba(30,42,31,.18);
+    }
+    .hero-img-accent {
+      position: absolute; left: 0; bottom: 0;
+      width: 52%; height: 52%;
+      border-radius: 24px 80px 24px 24px;
+      object-fit: cover;
+      box-shadow: 0 16px 40px rgba(30,42,31,.14);
+      border: 5px solid var(--warm-white);
+    }
+    .hero-float-card {
+      position: absolute; right: -10px; bottom: 80px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      box-shadow: 0 12px 32px rgba(30,42,31,.12);
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .85rem;
+    }
+    .hero-float-icon { font-size: 1.6rem; }
+    .hero-float-label { font-weight: 600; color: var(--charcoal); }
+    .hero-float-sub { font-size: .75rem; color: var(--muted); }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 6rem 5vw; }
+    .section-tag {
+      font-size: .8rem; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: .8rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      line-height: 1.2; color: var(--charcoal);
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: italic; color: var(--sage); }
+    .section-lead {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.8; max-width: 540px;
+    }
+
+    /* ─── SERVICES ─── */
+    #servicos { background: var(--cream); }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3.5rem;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.8rem;
+      transition: transform .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--sage), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(30,42,31,.1); }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--sage-pale);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.3rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 600;
+      color: var(--charcoal); margin-bottom: .6rem;
+    }
+    .service-desc { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+
+    /* ─── ABOUT / IMAGE SECTION ─── */
+    #sobre {
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 5rem;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img {
+      width: 100%; border-radius: 28px;
+      object-fit: cover; height: 480px;
+      box-shadow: 0 20px 50px rgba(30,42,31,.15);
+    }
+    .about-badge-wrap {
+      position: absolute; top: -20px; right: -20px;
+      background: var(--sage); color: #fff;
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(74,124,89,.4);
+    }
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; line-height: 1;
+    }
+    .about-badge-text { font-size: .65rem; font-weight: 600; letter-spacing: .5px; text-align: center; }
+    .about-list { list-style: none; margin: 1.8rem 0; display: flex; flex-direction: column; gap: .9rem; }
+    .about-list li {
+      display: flex; align-items: flex-start; gap: .8rem;
+      font-size: .95rem; color: var(--charcoal); line-height: 1.6;
+    }
+    .about-list li::before {
+      content: '✓';
+      background: var(--sage-pale); color: var(--sage);
+      font-weight: 700; font-size: .75rem;
+      min-width: 22px; height: 22px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin-top: .15rem;
+    }
+
+    /* ─── TEAM ─── */
+    #equipe { background: var(--cream); }
+    .team-header { text-align: center; margin-bottom: 3.5rem; }
+    .team-header .section-lead { margin: 0 auto; }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+    }
+    .team-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .team-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(30,42,31,.1); }
+    .team-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.1rem;
+      display: block;
+      border: 3px solid var(--sage-pale);
+    }
+    .team-name { font-weight: 600; font-size: 1rem; color: var(--charcoal); margin-bottom: .25rem; }
+    .team-role { font-size: .8rem; color: var(--sage); font-weight: 600; margin-bottom: .6rem; letter-spacing: .3px; }
+    .team-bio { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+    .team-crm {
+      display: inline-block; margin-top: .7rem;
+      background: var(--cream); color: var(--muted);
+      padding: .25rem .7rem; border-radius: 50px;
+      font-size: .73rem; font-weight: 500;
+    }
+
+    /* ─── CONTACT ─── */
+    #contato {
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      align-items: start; gap: 5rem;
+    }
+    .contact-info h2 { margin-bottom: 1rem; }
+    .contact-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: var(--sage-pale);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-label { font-weight: 600; font-size: .88rem; color: var(--charcoal); }
+    .contact-value { font-size: .88rem; color: var(--muted); margin-top: .1rem; line-height: 1.5; }
+
+    /* Form */
+    .form-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 1.8rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    label { font-size: .82rem; font-weight: 600; color: var(--charcoal); letter-spacing: .2px; }
+    input, select, textarea {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      font-size: .9rem; color: var(--charcoal);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none; width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--sage);
+      box-shadow: 0 0 0 3px rgba(74,124,89,.1);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    select { appearance: none; cursor: pointer; }
+    .form-submit {
+      width: 100%; background: var(--sage); color: #fff;
+      border: none; border-radius: 50px;
+      padding: .9rem; font-size: 1rem; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: background .2s, transform .15s;
+      margin-top: .5rem;
+    }
+    .form-submit:hover { background: var(--charcoal); transform: translateY(-1px); }
+    .form-note { font-size: .78rem; color: var(--muted); text-align: center; margin-top: .8rem; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,.7);
+      padding: 3rem 5vw 2rem;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .footer-brand .logo { color: var(--sage-light); margin-bottom: .8rem; display: block; }
+    .footer-desc { font-size: .85rem; line-height: 1.7; }
+    .footer-col-title {
+      font-weight: 600; font-size: .85rem;
+      color: #fff; margin-bottom: 1rem;
+      letter-spacing: .3px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+    .footer-links a {
+      color: rgba(255,255,255,.6); text-decoration: none;
+      font-size: .85rem; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--sage-light); }
+    .footer-bottom {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255,255,255,.1);
+      text-align: center; padding: 1.2rem 5vw;
+      font-size: .78rem; color: rgba(255,255,255,.4);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; padding-top: 6rem; }
+      .hero-visual { height: 320px; }
+      #sobre { grid-template-columns: 1fr; }
+      #contato { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge, h1, .hero-desc, .hero-actions, .hero-stats {
+      animation: fadeUp .7s ease both;
+    }
+    .hero-badge { animation-delay: .05s; }
+    h1 { animation-delay: .15s; }
+    .hero-desc { animation-delay: .25s; }
+    .hero-actions { animation-delay: .35s; }
+    .hero-stats { animation-delay: .45s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="logo">Vita<span>Clínica</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre Nós</a></li>
+    <li><a href="#equipe">Equipe</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Agendar Consulta</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Saúde &amp; Bem-Estar</div>
+    <h1>Cuidado que <em>transforma</em> vidas com excelência</h1>
+    <p class="hero-desc">
+      A VitaClínica reúne os melhores especialistas para oferecer atendimento médico completo, humanizado e de alta qualidade. Sua saúde é nossa prioridade.
+    </p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn-primary">Agendar Consulta</a>
+      <a href="#servicos" class="btn-ghost">Nossos Serviços →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">8.500</div>
+        <div class="stat-label">Pacientes atendidos</div>
+      </div>
+      <div>
+        <div class="stat-num">97%</div>
+        <div class="stat-label">Satisfação dos pacientes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Imagem 1: Atendimento médico -->
+    <img
+      class="hero-img-main"
+      src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=700&q=80"
+      alt="Médico atendendo paciente com cuidado e atenção"
+    />
+    <!-- Imagem 2: Laboratório / exames -->
+    <img
+      class="hero-img-accent"
+      src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=500&q=80"
+      alt="Equipamentos modernos de exame laboratorial"
+    />
+    <div class="hero-float-card">
+      <div class="hero-float-icon">🏅</div>
+      <div>
+        <div class="hero-float-label">Acreditação Nacional</div>
+        <div class="hero-float-sub">Certificada pela ONA • 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVIÇOS ═══ -->
+<section id="servicos">
+  <div class="services-header">
+    <div>
+      <p class="section-tag">O que oferecemos</p>
+      <h2>Serviços pensados<br>para o seu <em>bem-estar</em></h2>
+    </div>
+    <p class="section-lead">
+      Uma gama completa de especialidades médicas e procedimentos de saúde em um único lugar, com tecnologia de ponta e equipe altamente qualificada.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">👨‍⚕️</div>
+      <h3>Atendimento Médico</h3>
+      <p class="service-desc">Consultas com clínicos gerais e especialistas em cardiologia, ortopedia, neurologia, pediatria e muito mais.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧪</div>
+      <h3>Exames Laboratoriais</h3>
+      <p class="service-desc">Análises clínicas completas com resultados precisos e rápidos, processados em laboratório próprio certificado.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🩻</div>
+      <h3>Exames de Imagem</h3>
+      <p class="service-desc">Ultrassonografia, raio-X, tomografia e ressonância magnética com equipamentos de última geração.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🥗</div>
+      <h3>Nutrição Clínica</h3>
+      <p class="service-desc">Acompanhamento nutricional personalizado para emagrecimento, hipertrofia, doenças crônicas e qualidade de vida.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧠</div>
+      <h3>Saúde Mental</h3>
+      <p class="service-desc">Consultas com psicólogos e psiquiatras para cuidar do seu equilíbrio emocional com sigilo e acolhimento.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💉</div>
+      <h3>Vacinação e Prevenção</h3>
+      <p class="service-desc">Centro de vacinação completo com vacinas do calendário adulto e infantil, e programas de rastreamento preventivo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SOBRE ═══ -->
+<section id="sobre">
+  <div class="about-img-wrap">
+    <!-- Imagem 3: Estrutura da clínica -->
+    <img
+      class="about-img"
+      src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=80"
+      alt="Recepção moderna e acolhedora da VitaClínica"
+    />
+    <div class="about-badge-wrap">
+      <span class="about-badge-num">12</span>
+      <span class="about-badge-text">ANOS DE<br>EXCELÊNCIA</span>
+    </div>
+  </div>
+  <div>
+    <p class="section-tag">Sobre a VitaClínica</p>
+    <h2>Medicina humanizada<br>com <em>tecnologia avançada</em></h2>
+    <p class="section-lead">
+      Fundada em 2012, a VitaClínica nasceu com a missão de democratizar o acesso à saúde de qualidade. Combinamos tecnologia de última geração com o calor humano que todo paciente merece.
+    </p>
+    <ul class="about-list">
+      <li>Corpo clínico com mais de 40 especialistas certificados</li>
+      <li>Estrutura moderna com mais de 2.000 m² de área clínica</li>
+      <li>Atendimento de segunda a sábado, das 7h às 20h</li>
+      <li>Convênio com mais de 30 operadoras de saúde</li>
+      <li>Resultados de exames online em até 24 horas</li>
+    </ul>
+    <a href="#contato" class="btn-primary">Fale Conosco</a>
+  </div>
+</section>
+
+<!-- ═══ EQUIPE ═══ -->
+<section id="equipe">
+  <div class="team-header">
+    <p class="section-tag">Nossa Equipe</p>
+    <h2>Profissionais dedicados<br>à sua <em>saúde</em></h2>
+    <p class="section-lead">Conheça alguns dos especialistas que fazem parte do nosso corpo clínico multidisciplinar.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <img
+        class="team-avatar"
+        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&fit=crop&crop=face"
+        alt="Dra. Ana Carvalho"
+      />
+      <div class="team-name">Dra. Ana Carvalho</div>
+      <div class="team-role">Clínica Geral &amp; Diretora Médica</div>
+      <p class="team-bio">Especialista em medicina interna com pós-graduação em gestão de saúde pela USP.</p>
+      <span class="team-crm">CRM-SP 123.456</span>
+    </div>
+    <div class="team-card">
+      <img
+        class="team-avatar"
+        src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80&fit=crop&crop=face"
+        alt="Dr. Rafael Mendes"
+      />
+      <div class="team-name">Dr. Rafael Mendes</div>
+      <div class="team-role">Cardiologista</div>
+      <p class="team-bio">Cardiologista intervencionista formado pela UNIFESP, com fellowship no InCor.</p>
+      <span class="team-crm">CRM-SP 234.567</span>
+    </div>
+    <div class="team-card">
+      <img
+        class="team-avatar"
+        src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=200&q=80&fit=crop&crop=face"
+        alt="Dra. Juliana Ramos"
+      />
+      <div class="team-name">Dra. Juliana Ramos</div>
+      <div class="team-role">Nutricionista Clínica</div>
+      <p class="team-bio">Mestre em Nutrição Humana pela UNICAMP. Especialista em nutrição esportiva e metabólica.</p>
+      <span class="team-crm">CRN-3 45.678</span>
+    </div>
+    <div class="team-card">
+      <img
+        class="team-avatar"
+        src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=200&q=80&fit=crop&crop=face"
+        alt="Dr. Lucas Ferreira"
+      />
+      <div class="team-name">Dr. Lucas Ferreira</div>
+      <div class="team-role">Psiquiatra</div>
+      <p class="team-bio">Psiquiatra com especialização em saúde mental integrativa e terapias cognitivo-comportamentais.</p>
+      <span class="team-crm">CRM-SP 345.678</span>
+    </div>
+    <div class="team-card">
+      <img
+        class="team-avatar"
+        src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=200&q=80&fit=crop&crop=face"
+        alt="Dra. Marina Souza"
+      />
+      <div class="team-name">Dra. Marina Souza</div>
+      <div class="team-role">Radiologista</div>
+      <p class="team-bio">Especialista em diagnóstico por imagem, com experiência em tomografia e ressonância.</p>
+      <span class="team-crm">CRM-SP 456.789</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTATO ═══ -->
+<section id="contato" style="background: var(--cream);">
+  <div class="contact-info">
+    <p class="section-tag">Entre em Contato</p>
+    <h2>Agende sua<br><em>consulta</em> hoje</h2>
+    <p class="section-lead">
+      Nossa equipe está pronta para atendê-lo. Preencha o formulário ou entre em contato pelos canais abaixo.
+    </p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Endereço</div>
+          <div class="contact-value">Av. Paulista, 1500 — Bela Vista<br>São Paulo – SP, CEP 01310-200</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Telefone &amp; WhatsApp</div>
+          <div class="contact-value">(11) 4002-8922<br>(11) 99999-1234</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <div>
+          <div class="contact-label">Horário de Atendimento</div>
+          <div class="contact-value">Segunda a sexta: 7h – 20h<br>Sábados: 8h – 14h</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">E-mail</div>
+          <div class="contact-value">contato@vitaclinica.com.br</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-title">Formulário de Agendamento</div>
+    <form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome">Nome completo *</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cidade">Cidade *</label>
+          <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required />
+        </div>
+        <div class="form-group">
+          <label for="estado">Estado *</label>
+          <select id="estado" name="estado" required>
+            <option value="">Selecione</option>
+            <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+            <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+            <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+            <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+            <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+            <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+            <option selected>SP</option><option>SE</option><option>TO</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="servico">Serviço desejado</label>
+        <select id="servico" name="servico">
+          <option value="">Selecione um serviço</option>
+          <option>Consulta médica</option>
+          <option>Exames laboratoriais</option>
+          <option>Exames de imagem</option>
+          <option>Nutrição clínica</option>
+          <option>Saúde mental</option>
+          <option>Vacinação</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" placeholder="Descreva brevemente o motivo da consulta ou dúvidas..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Enviar Solicitação</button>
+      <p class="form-note">🔒 Seus dados estão protegidos conforme a LGPD. Não compartilhamos suas informações.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo">Vita<span>Clínica</span></span>
+    <p class="footer-desc">
+      Cuidando da sua saúde com dedicação, tecnologia e humanidade desde 2012. Sua vida, nossa missão.
+    </p>
+  </div>
+  <div>
+    <div class="footer-col-title">Serviços</div>
+    <ul class="footer-links">
+      <li><a href="#servicos">Atendimento Médico</a></li>
+      <li><a href="#servicos">Exames Laboratoriais</a></li>
+      <li><a href="#servicos">Exames de Imagem</a></li>
+      <li><a href="#servicos">Nutrição Clínica</a></li>
+      <li><a href="#servicos">Saúde Mental</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Clínica</div>
+    <ul class="footer-links">
+      <li><a href="#sobre">Sobre Nós</a></li>
+      <li><a href="#equipe">Nossa Equipe</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="#">Convênios</a></li>
+      <li><a href="#">Política de Privacidade</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2024 VitaClínica. Todos os direitos reservados. — CNPJ 00.000.000/0001-00 — Responsável Técnico: Dra. Ana Carvalho · CRM-SP 123.456
+</div>
+
+</body>
+</html>
